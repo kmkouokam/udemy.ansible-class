@@ -1,0 +1,27 @@
+---
+- name: web servers
+  hosts:
+    webservers
+    #remote_user: root
+  become: yes
+  tasks:
+    - name: Install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: latest
+
+    - name: Start Service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: db servers
+  hosts: DBservers
+  become: yes
+
+  tasks:
+    - name: Install mariadb-server
+      ansible.builtin.yum:
+        name: mariadb-server
+        state: present
